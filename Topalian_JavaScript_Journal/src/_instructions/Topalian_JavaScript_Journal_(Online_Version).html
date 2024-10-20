@@ -1,0 +1,678 @@
+<!-- Dedicated to God the Father -->
+<!-- All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024 -->
+<!-- https://github.com/ChristopherTopalian -->
+<!-- https://github.com/ChristopherAndrewTopalian -->
+<!-- Topalian_JavaScript_Journal_(Online_Version).html -->
+<!-- Version 001 - (2024-10-20) -->
+
+<html>
+<head>
+<title> Topalian JavaScript Journal </title>
+
+<link rel = "icon" href = "src/media/texture/icon.png" type = "image/png">
+
+<style>
+
+/* style001.css */
+
+body
+{
+    background-color: rgb(40, 40, 40);
+    font-family: arial;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+}
+
+hr
+{
+    width: 500px;
+    margin: 8px;
+}
+
+textarea
+{
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+button
+{
+    background-color: rgb(0, 77, 129);
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(100, 100, 255);
+    border-radius: 4px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    opacity: 1.0;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+button:hover
+{
+    background-color: rgb(7, 31, 47);
+    border-color: rgb(0, 255, 255);
+    color: rgb(0, 255, 255);
+}
+
+button:active
+{
+    color: rgb(255, 0, 255);
+}
+
+/* -- */
+
+/* Dedicated to God the Father */
+/* All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024 */
+/* https://github.com/ChristopherTopalian */
+/* https://github.com/ChristopherAndrewTopalian */
+
+</style>
+
+<script>
+
+// shortcuts.js
+
+function ge(whichId)
+{
+    let result = document.getElementById(whichId);
+    return result;
+}
+
+function ce(whichType)
+{
+    let result = document.createElement(whichType);
+    return result;
+}
+
+function ba(whichElement)
+{
+    let result = document.body.append(whichElement);
+    return result;
+}
+
+function ct(whichText)
+{
+    let result = document.createTextNode(whichText);
+    return result;
+}
+
+function gr(whichId)
+{
+    let result =  ge(whichId).getBoundingClientRect();
+    return result;
+}
+
+function cl(whichMessage)
+{
+    let result = console.log(whichMessage);
+    return result;
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// world_variables.js
+
+let counter = 0;
+
+let recordEntry;
+
+let records = [];
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// makeInterface.js
+
+function makeInterface()
+{
+    makeMainLayout();
+
+    makePostLayout();
+
+    makeRecordsTextBox();
+
+    makeTextInputForPosting();
+
+    makePostButton();
+    listenForPostButtonClick();
+    listenForPostButtonHover();
+
+    makeTitleOfApp();
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// makeMainLayout.js
+
+function makeMainLayout()
+{
+    let mainDiv = ce('div');
+    mainDiv.id = 'mainLayout';
+    mainDiv.style.display = 'flex';
+    mainDiv.style.flexDirection = 'column';
+    ba(mainDiv);
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// makePostButton.js
+
+function makePostButton()
+{
+    let mainDiv = ce("div");
+    mainDiv.style.display = 'flex';
+    mainDiv.style.display = 'row';
+    ge('mainLayout').append(mainDiv);
+
+    //-//
+
+    let postButton = ce("button");
+    postButton.id = "postButton";
+    postButton.textContent = "Post";
+    postButton.style.width = 70 + 'px';
+    mainDiv.append(postButton);
+}
+
+function listenForPostButtonClick()
+{
+    if (ge('postButton'))
+    {
+        let postListener = ge('postButton').addEventListener('click', function(theEvent)
+        {
+            clickSound();
+
+            let theText = ge("textWords").value;
+
+            //-//
+
+            let controlsContainer = ce('div');
+            controlsContainer.style.margin = '5px';
+            ge('postLayout').append(controlsContainer);
+
+            //-//
+
+            let theNavigation = ce("div");
+            theNavigation.style.display = 'flex';
+            theNavigation.style.flexDirection = 'row';
+            theNavigation.id = "navigation" + counter;
+            ge('postLayout').append(theNavigation);
+
+            //-//
+
+            counter += 1;
+
+            if (counter == 0)
+            {
+                records = [];
+                ge("recordsTextBox").value = "";
+            }
+
+            //-//
+
+            let minimizeButton = ce("button");
+            minimizeButton.textContent = "_";
+            minimizeButton.style.height = 30 + 'px';
+            minimizeButton.onclick = function()
+            {
+                clickSound();
+
+                //  adjust to minimum height
+                ge(theTextEntry.id).style.height = 60 + "px";
+            };
+            minimizeButton.onmouseover = function()
+            {
+                hoverSound();
+            };
+
+            theNavigation.append(minimizeButton);
+
+            //-//
+
+            let maximizeButton = ce("button");
+            maximizeButton.style.height = 30 + 'px';
+            maximizeButton.textContent = "+";
+            maximizeButton.onclick = function()
+            {
+                clickSound();
+
+                ge(theTextEntry.id).style.height = 200 + "px";
+
+                ge(theTextEntry.id).style.height = ge(theTextEntry.id).scrollHeight + 'px';
+            };
+            maximizeButton.onmouseover = function()
+            {
+                hoverSound();
+            };
+            theNavigation.append(maximizeButton);
+
+            //-//
+
+            let deleteButton = ce("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.style.height = 30 + 'px';
+            deleteButton.onclick = function()
+            {
+                clickSound();
+
+                deleteThisRecordButton(theTextEntry.id);
+
+                ge("recordsTextBox").value = JSON.stringify(records);
+            };
+            deleteButton.onmouseover = function()
+            {
+                hoverSound();
+            };
+            theNavigation.append(deleteButton);
+
+            //-//
+
+            let theTextEntry = ce("textarea");
+            theTextEntry.style.width = '700px';
+            theTextEntry.style.height = '60px';
+            theTextEntry.style.borderRadius = '8px';
+            theTextEntry.style.paddingLeft = '10px';
+            theTextEntry.style.paddingRight = '10px';
+            theTextEntry.style.overflowY = 'scroll';
+            theTextEntry.style.fontSize = '20px';
+            theTextEntry.id = counter - 1;
+            theTextEntry.title = counter - 1;
+
+            //-//
+
+            let theDate = new Date().toLocaleString();
+
+            theTextEntry.value = theDate + "\n" +
+            ge("textWords").value;
+
+            addRecord(theTextEntry.id, theDate, ge("textWords").value);
+
+            //-//
+
+            theTextEntry.onkeyup = function()
+            {
+                editRecord(theTextEntry.id);
+            };
+
+            theNavigation.append(theTextEntry);
+        });
+    }
+}
+
+function listenForPostButtonHover()
+{
+    let postListenerHover = ge('postButton').addEventListener('mouseover', function(theEvent)
+    {
+        hoverSound();
+    });
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// makePostLayout.js
+
+function makePostLayout()
+{
+    let mainDiv = ce('div');
+    mainDiv.id = 'postLayout';
+    mainDiv.style.display = 'flex';
+    mainDiv.style.flexDirection = 'column';
+    ba(mainDiv);
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// makeRecordsTextBox.js
+
+function makeRecordsTextBox()
+{
+    let mainDiv = ce("div");
+    mainDiv.id = 'mainRecords';
+    ge('mainLayout').append(mainDiv);
+
+    //-//
+
+    let theTextBox = ce("textarea");
+    theTextBox.value = records;
+    theTextBox.id = "recordsTextBox";
+    theTextBox.style.width = 500 + 'px';
+    theTextBox.style.height = 50 + 'px';
+    mainDiv.append(theTextBox);
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// makeTextInputForPosting.js
+
+function makeTextInputForPosting()
+{
+    let textWords = ce("textarea");
+    textWords.id = "textWords";
+    textWords.style.width = '70%';
+    textWords.style.height = '30vh';
+    textWords.style.paddingLeft = '20px';
+    textWords.style.paddingRight = '20px';
+    textWords.style.paddingTop = '20px';
+    textWords.style.paddingBottom = '20px';
+    textWords.style.borderRadius = '8px';
+    textWords.style.backgroundColor = 'rgb(0, 0, 0)';
+    textWords.style.fonFamily = 'arial';
+    textWords.style.fontSize = '20px';
+    textWords.style.color = 'rgb(255, 255, 255)';
+    textWords.placeholder = 'Type Journal Entry Here...';
+    ge('mainLayout').append(textWords);
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// makeTitleOfApp.js
+
+function makeTitleOfApp()
+{
+    // mainDiv
+    let mainDiv = ce('div');
+    mainDiv.style.position = 'absolute';
+    mainDiv.style.right = '20px';
+    mainDiv.style.top = '2px';
+    mainDiv.style.zIndex = 1;
+    ba(mainDiv);
+
+    //-//
+
+    // titleOfApp
+    let titleOfApp = ce('a');
+    titleOfApp.id = 'titleOfApp';
+    titleOfApp.textContent = 'Topalian JavaScript Journal';
+    titleOfApp.href = 'https://github.com/christophertopalian/';
+    titleOfApp.target = '_blank';
+    titleOfApp.style.fontSize = '17px';
+    titleOfApp.style.fontWeight = 'bold';
+    titleOfApp.style.textDecoration = 'none';
+    titleOfApp.style.color = 'gray';
+    mainDiv.append(titleOfApp);
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// addRecord.js
+
+function addRecord(whichId, whichDate, whichWords)
+{
+    // if records exist
+    if (records.length > 0)
+    {
+        let largestId = Math.max.apply(Math,records.map(function(x)
+        {
+            return x.id;
+        }));
+
+        addingOneToLargestId = largestId + 1;
+    }
+    // else if no records exist, such as after clearing all records
+    else
+    {
+        addingOneToLargestId = 0;
+
+        records = [];
+    }
+
+    recordEntry =
+    {
+        id: addingOneToLargestId,
+        date: whichDate,
+        text: whichWords
+    }
+
+    records.push(recordEntry);
+
+    cl("records = " + JSON.stringify(records) + ";");
+
+    ge("recordsTextBox").value = JSON.stringify(records);
+
+    return records;
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// deleteThisRecordButton.js
+
+function deleteThisRecordButton(whichId)
+{
+    let warningDelete = confirm("DELETE ONLY This Record?");
+
+    if (warningDelete == true)
+    {
+        // cl("Okay");
+    }
+    else if (warningDelete == false)
+    {
+        alert("Canceled");
+
+        return;
+    }
+
+    records.splice(whichId, 1);
+
+    cl("records = " + JSON.stringify(records) + ";");
+
+    ge(whichId).remove();
+
+    ge("navigation" + parseInt(whichId)).remove();
+
+    cl("navigation" + parseInt(whichId));
+    
+    cl("records length = " + records.length);
+
+    if (whichId == 0)
+    {
+        counter = records.length;
+
+        records = [];
+    }
+    else
+    {
+        counter = records.length;
+    }
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// editRecord.js
+
+function editRecord(whichId)
+{
+    let existingId = records[whichId].id;
+
+    recordEntry =
+    {
+        id: existingId, // whichId
+        date: records[whichId].date,
+        text: ge(whichId).value
+    }
+
+    records.splice(whichId, 1, recordEntry);
+
+    cl("records = " + JSON.stringify(records) + ";");
+
+    ge("recordsTextBox").value = JSON.stringify(records);
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// sound.js
+
+let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playTone(frequency, duration, waveType, volume, detune, attackTime, releaseTime, panValue)
+{
+    let oscillator = audioCtx.createOscillator();
+    // 'sine', 'square', 'sawtooth', 'triangle'
+    oscillator.type = waveType;
+    oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+    oscillator.detune.setValueAtTime(detune, audioCtx.currentTime);
+
+    let gainNode = audioCtx.createGain();
+    let pannerNode = audioCtx.createStereoPanner();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(pannerNode);
+    pannerNode.connect(audioCtx.destination);
+
+    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+
+    // attack
+    gainNode.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + attackTime);
+    gainNode.gain.linearRampToValueAtTime(0, 
+
+    // release
+    audioCtx.currentTime + duration / 1000 - releaseTime);
+
+    pannerNode.pan.setValueAtTime(panValue, audioCtx.currentTime);
+
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + duration / 1000);
+}
+
+function hoverSound()
+{
+    playTone(
+        300,     // frequency
+        500,     // duration
+        'sine',  // waveType
+        0.2,      // volume
+        50,       // detune
+        0.2,      // attackTime
+        0.2,      // releaseTime
+        -0.5      // panValue -0.5 is left
+    );
+}
+
+function clickSound()
+{
+    playTone(
+        400,     // frequency
+        500,     // duration
+        'sine',  // waveType
+        0.2,      // volume
+        50,       // detune
+        0.2,      // attackTime
+        0.2,      // releaseTime
+        -0.5      // panValue -0.5 is left
+    );
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+// whenLoaded.js
+
+function whenLoaded()
+{
+    makeInterface();
+
+    ge("recordsTextBox").value = JSON.stringify(records);
+}
+
+//--//
+
+// Dedicated to God the Father
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2024
+// https://github.com/ChristopherTopalian
+// https://github.com/ChristopherAndrewTopalian
+// https://sites.google.com/view/CollegeOfScripting
+
+</script>
+
+</head>
+
+<body onload = "whenLoaded();">
+
+</body>
+
+</html>
+
